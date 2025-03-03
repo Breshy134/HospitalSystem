@@ -32,7 +32,7 @@ def appoint(request):
             message = request.POST['message'],
         )
        myappointment.save()
-       return redirect('/appointment')
+       return redirect('/show')
 
     else:
         return render(request, "appointment.html")
@@ -51,4 +51,11 @@ def contact(request):
     else:
         return render(request, "contact.html")
 
+def show(request):
+    all = Appointment.objects.all()
+    return render(request, "show.html", {'all': all})
 
+def delete(request,id):
+    deletedappointment = Appointment.objects.get(id=id)
+    deletedappointment.delete()
+    return redirect('/show')
